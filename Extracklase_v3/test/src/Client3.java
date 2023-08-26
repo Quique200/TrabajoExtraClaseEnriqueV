@@ -9,7 +9,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -24,6 +23,7 @@ public class Client3 extends Application{
 
 
     public void start(Stage primaryStage)throws Exception{
+        
         Group layout = new Group();
         TextField text = new TextField();
         Button button = new Button();
@@ -41,7 +41,7 @@ public class Client3 extends Application{
 
         final BufferedReader in;   // object to read data from socket
         final PrintWriter out;     // object to write data into socket
-        final Scanner sc = new Scanner(text.getText()); // object to read data from user's keybord
+        final Scanner sc = new Scanner(System.in); // object to read data from user's keybord
 
         System.out.println("Indique el nombre de usuario con el que se desea ingresar");
         String username = sc.nextLine();
@@ -86,6 +86,7 @@ public class Client3 extends Application{
                 @Override
                 public void run() {
                     String msgFromGroupChat;
+
                     while((clientSocket.isConnected())){
                     try {
                         textArea.setEditable(true);

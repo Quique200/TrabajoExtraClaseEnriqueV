@@ -22,7 +22,7 @@ public class ClientHandler implements Runnable {
 
             this.clientUsername = bufferedReader.readLine(); 
             clientHandlers.add(this); 
-            broadcastMessage("SERVER:"+clientUsername+"has entered the chat!");
+            broadcastMessage("SERVER: "+clientUsername+" ha entrado al chat!");
         
         } catch (IOException e){
             closeEverything(socket,bufferedReader,bufferedWriter);
