@@ -80,34 +80,32 @@ public class Client3 extends Application{
                     
                 }
             });
-        //sender.start();  
-              //      button.setOnAction(e -> 
-            //{    
-        //sender.start();
-          //     } );
-            Thread receiver = new Thread(new Runnable() {
-                String msg;
+            sender.start();  
+
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    String msgFromGroupChat;
+                    while((clientSocket.isConnected())){
                     try {
-                        msg = in.readLine();
-                        while(msg!=null){
-                            System.out.println("Server : "+msg);
-                            msg = in.readLine();
-                        }
-                        System.out.println("Server out of service");
-                        out.close();
-                        clientSocket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        textArea.setEditable(true);
+                        msgFromGroupChat = in.readLine();
+                        System.out.println(msgFromGroupChat);
+                        String finalMsg = msgFromGroupChat;
+                        Platform.runLater(()->{
+                            textArea.setText(textArea.getText() + "\n" + " " + finalMsg);
+                        });
+                        textArea.setEditable(false);
+                    } catch (IOException E) {
+                        E.printStackTrace();
                     }
                 }
-            });
-            receiver .start();
+                }
+            }).start();
     }catch (IOException e){
         e.printStackTrace();
         }
-        primaryStage.setTitle("Title of the Window");
+        primaryStage.setTitle("Usuario :" +username);
         //Button button;
         //button = new Button();
         //button.setText("Enviar");
