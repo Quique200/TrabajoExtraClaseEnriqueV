@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.control.TextArea;
 
 public class Client3 extends Application{
     public static void main(String[] args){
@@ -24,10 +25,18 @@ public class Client3 extends Application{
     public void start(Stage primaryStage)throws Exception{
         Group layout = new Group();
         TextField text = new TextField();
-        Button button;
-        button = new Button();
-        final Label label = new Label("Hola Mundos");
+        Button button = new Button();
+        TextArea textArea = new TextArea();
+        textArea.setPrefWidth(700);
+        textArea.setPrefHeight(480);
+        text.setPrefWidth(500);
+        text.setPrefHeight(20);
         button.setText("Enviar");
+
+
+
+
+
         final Socket clientSocket; // socket used by client to send and recieve data from server
         final BufferedReader in;   // object to read data from socket
         final PrintWriter out;     // object to write data into socket
@@ -58,7 +67,6 @@ public class Client3 extends Application{
                         //Button boton;
                         //boton = new Button();
                         //boton.setText(text.getText());
-                        label.setText(label.getText() + "\n" + "Usted :"+text.getText());
                         text.clear();
                         //layout.getChildren().add(boton);
                         break;
@@ -81,7 +89,6 @@ public class Client3 extends Application{
                         msg = in.readLine();
                         while(msg!=null){
                             System.out.println("Server : "+msg);
-                            label.setText(label.getText() + "\n" + "Server :"+ msg);
                             msg = in.readLine();
                         }
                         System.out.println("Server out of service");
@@ -112,14 +119,11 @@ public class Client3 extends Application{
         text.setLayoutX(500);
         text.setLayoutY(550);
 
-        label.setLayoutX(400);
-        label.setLayoutY(250);
 
         r.setFill(Color.BLACK);
         layout.getChildren().add(r);
         layout.getChildren().add(button);
         layout.getChildren().add(text);
-        layout.getChildren().add(label);
         
         Scene scene = new Scene(layout,800,600);
         primaryStage.setScene(scene);
