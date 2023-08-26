@@ -18,7 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.application.Platform;
 
 public class Client3 extends Application{
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         launch(args);
     }
 
@@ -106,33 +106,32 @@ public class Client3 extends Application{
         e.printStackTrace();
         }
         primaryStage.setTitle("Usuario :" +username);
-        //Button button;
-        //button = new Button();
-        //button.setText("Enviar");
+        button.setLayoutX(640);
+        button.setLayoutY(540);
+        
+        Rectangle r = new Rectangle(0, 0, 670, 400);
+        r.setLayoutX(50);
+        r.setLayoutY(170);
+
+        text.setLayoutX(100);
+        text.setLayoutY(540);
+
+        textArea.setLayoutX(50);
+        textArea.setLayoutY(50);
 
 
-        //Group layout = new Group();
-        button.setLayoutX(670);
-        button.setLayoutY(550);
-        Rectangle r = new Rectangle(0, 0, 450, 400);
-        r.setLayoutX(300);
-        r.setLayoutY(180);
-
-        text.setLayoutX(500);
-        text.setLayoutY(550);
-
-
-        r.setFill(Color.BLACK);
+        r.setFill(Color.web("#c9e9fc"));
         layout.getChildren().add(r);
         layout.getChildren().add(button);
         layout.getChildren().add(text);
+        layout.getChildren().add(textArea);
         
         Scene scene = new Scene(layout,800,600);
+        scene.setFill(Color.web("#e4f4fd"));
+        textArea.setStyle("-fx-control-inner-background: #fff6ed;");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
-
+        textArea.setEditable(false);
 
     }
 }
