@@ -1,3 +1,4 @@
+//Librerias utilizadas para el socket
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+//Librerias utilizadas para JavaFX
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -38,8 +40,8 @@ public class Client3 extends Application{
         TextField text = new TextField();
         Button button = new Button();
         TextArea textArea = new TextArea();
-        textArea.setPrefWidth(700);
-        textArea.setPrefHeight(480);
+        textArea.setPrefWidth(700);//Determinar el ancho
+        textArea.setPrefHeight(480);//Derterminar la altura
         text.setPrefWidth(500);
         text.setPrefHeight(20);
         button.setText("Enviar");
@@ -49,12 +51,12 @@ public class Client3 extends Application{
 
 
         //Configuración de sockets y entrada/salida
-        final BufferedReader in;   
-        final PrintWriter out;     
+        final BufferedReader in;  //Se declara la entrada 
+        final PrintWriter out;    //Se declara la salida
         final Scanner sc = new Scanner(System.in); // Sirve para obtener la informacón que se encuentra en la terminal la cual fue escrita por el teclado
         //Captura del nombre de usuario
         System.out.println("Indique el nombre de usuario con el que se desea ingresar");
-        String username = sc.nextLine();
+        String username = sc.nextLine();//Obtiene el usuario escrito
         Socket clientSocket = new Socket("localhost", 1234);
         
         
@@ -64,21 +66,20 @@ public class Client3 extends Application{
             //En esta sección se inicializa la entrada/salida
             out = new PrintWriter(clientSocket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out.write(username);
+            out.write(username);//Envia el username escrito
             out.println();
             out.flush();
             
-            //Este hilo es el que permite enviar los mensajes al servidor
+            //Este Thread es el que permite enviar los mensajes al servidor
             Thread sender = new Thread(new Runnable() {
-                String msg;
                 public void run() {                          
                     button.setOnAction(e -> 
             {
                 String msg;    
                 while((clientSocket.isConnected())){
-                        textArea.setEditable(true);
+                        textArea.setEditable(true);//Se habilita el Text Area para ser modificada
                         msg = text.getText();
-                        out.println(username + ":" + msg);
+                        out.println(username + ":" + msg);//Se envia el mensaje escrito
                         out.flush();
                         String finalMSG = msg;
                         //Debido a que en el thread no se pueden hacer cambios en las interfaces graficas entonces se agrega el Platform para poder lograrlo
@@ -86,7 +87,7 @@ public class Client3 extends Application{
                             textArea.setText(textArea.getText() + "\n" + username + ":" + finalMSG);
                         });
                         text.clear();
-                        textArea.setEditable(false);
+                        textArea.setEditable(false); //Se deshabilita el Text Area para que no sea editable
                         break;
 
                     }
@@ -96,7 +97,7 @@ public class Client3 extends Application{
             });
             sender.start();  
 
-            //Este hilo es el que permite recibir los mensajes del servidor he imprimirlos en la interfaz grafica
+            //Este Thread es el que permite recibir los mensajes del servidor he imprimirlos en la interfaz grafica
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -105,8 +106,8 @@ public class Client3 extends Application{
                     while((clientSocket.isConnected())){
                     try {
                         textArea.setEditable(true);
-                        msgFromGroupChat = in.readLine();
-                        System.out.println(msgFromGroupChat);
+                        msgFromGroupChat = in.readLine();//Se lee el mensaje recibido
+                        System.out.println(msgFromGroupChat);//Se imprime el mensaje recibido
                         String finalMsg = msgFromGroupChat;
                         Platform.runLater(()->{
                             textArea.setText(textArea.getText() + "\n" + " " + finalMsg);
@@ -121,7 +122,7 @@ public class Client3 extends Application{
     }catch (IOException e){
         e.printStackTrace();
         }
-        primaryStage.setTitle("Usuario :" +username);
+        primaryStage.setTitle("Usuario :" +username);//Se le da un nombre a la ventana que se abre de la interfaz
         button.setLayoutX(640);
         button.setLayoutY(540);
         
@@ -137,7 +138,7 @@ public class Client3 extends Application{
 
 
         r.setFill(Color.web("#c9e9fc"));
-        layout.getChildren().add(r);
+        layout.getChildren().add(r);//Se añaden los elementos a la interfaz
         layout.getChildren().add(button);
         layout.getChildren().add(text);
         layout.getChildren().add(textArea);
@@ -146,7 +147,7 @@ public class Client3 extends Application{
         scene.setFill(Color.web("#e4f4fd"));
         textArea.setStyle("-fx-control-inner-background: #fff6ed;");
         primaryStage.setScene(scene);
-        primaryStage.show();
+        primaryStage.show();//Se muestra la interfaz grafica
         textArea.setEditable(false);
 
     }
