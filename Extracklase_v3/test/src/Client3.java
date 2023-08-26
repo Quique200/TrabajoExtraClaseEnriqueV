@@ -37,32 +37,35 @@ public class Client3 extends Application{
 
 
 
-        final Socket clientSocket; // socket used by client to send and recieve data from server
+
         final BufferedReader in;   // object to read data from socket
         final PrintWriter out;     // object to write data into socket
         final Scanner sc = new Scanner(text.getText()); // object to read data from user's keybord
-        final int val;
+
+        System.out.println("Indique el nombre de usuario con el que se desea ingresar");
+        String username = sc.nextLine();
+        Socket clientSocket = new Socket("localhost", 1234);
         
         
 
 
         try {
-            clientSocket = new Socket("127.0.0.1",5000);
             out = new PrintWriter(clientSocket.getOutputStream());
-            //String msg;
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                //Thread sender = new Thread(new Runnable() {
-                //String msg;
-                //@Override;
-                //public void run() {                          
+            out.write(username);
+            out.println();
+            out.flush();
+            Thread sender = new Thread(new Runnable() {
+                String msg;
+                public void run() {                          
                     button.setOnAction(e -> 
             {
                 String msg;    
-                while(true){
-                        System.out.println(text.getText());
-                        //System.out.println(sc.nextLine());
+                while((clientSocket.isConnected)){
+                        textArea.setEditable(true);
                         msg = text.getText();
-                        out.println(msg);
+                        out.println(username + ":" + msg);
+                        out.flush();
                         out.flush();
                         //Button boton;
                         //boton = new Button();
@@ -74,8 +77,8 @@ public class Client3 extends Application{
                     }
                     } );
                     
-                //}
-            //});
+                }
+            });
         //sender.start();  
               //      button.setOnAction(e -> 
             //{    
