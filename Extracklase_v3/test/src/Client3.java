@@ -22,6 +22,8 @@ import javafx.application.Platform;
 public class Client3 extends Application{
     /**
      * Este es el metodo main(principal) el cual es el encargado de iniciar la aplicación
+     * @param args Los argumentos de la línea de comandos (no se utilizan).
+     * @throws IOException Si ocurre un error cuando se inicia la aplicación.
      * */
     public static void main(String[] args) throws IOException{
         launch(args);
