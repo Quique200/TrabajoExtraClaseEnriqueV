@@ -6,6 +6,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Client",
+            "request": "launch",
+            "mainClass": "Client",
+            "projectName": "Extracklase_v3_1bdc85b8",
+            "vmArgs": "--module-path \"C:/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
             "name": "Server",
             "request": "launch",
             "mainClass": "Server",
@@ -26,9 +34,9 @@
         },
         {
             "type": "java",
-            "name": "Client3",
+            "name": "Client",
             "request": "launch",
-            "mainClass": "Client3",
+            "mainClass": "Client",
             "projectName": "Extracklase_v3_1bdc85b8",
             "vmArgs": "--module-path \"C:/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
         },
