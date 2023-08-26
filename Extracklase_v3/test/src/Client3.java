@@ -16,12 +16,20 @@ import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 import javafx.application.Platform;
 
+/**
+ * Clase que implenta una aplicación de chat desde la perspectiva de un cliente utilizado JavaFX, la cual se conecta a un servidor por medio de sockets
+ * */
 public class Client3 extends Application{
+    /**
+     * Este es el metodo main(principal) el cual es el encargado de iniciar la aplicación
+     * */
     public static void main(String[] args) throws IOException{
         launch(args);
     }
 
-
+/** 
+ * Método el cual es usado para configurar y mostrar la interfaz gráfica de la apliación
+*/
     public void start(Stage primaryStage)throws Exception{
         
         Group layout = new Group();
@@ -38,11 +46,11 @@ public class Client3 extends Application{
 
 
 
-
-        final BufferedReader in;   // object to read data from socket
-        final PrintWriter out;     // object to write data into socket
-        final Scanner sc = new Scanner(System.in); // object to read data from user's keybord
-
+        //Configuración de sockets y entrada/salida
+        final BufferedReader in;   
+        final PrintWriter out;     
+        final Scanner sc = new Scanner(System.in); // Sirve para obtener la informacón que se encuentra en la terminal la cual fue escrita por el teclado
+        //Captura del nombre de usuario
         System.out.println("Indique el nombre de usuario con el que se desea ingresar");
         String username = sc.nextLine();
         Socket clientSocket = new Socket("localhost", 1234);
@@ -51,11 +59,14 @@ public class Client3 extends Application{
 
 
         try {
+            //En esta sección se inicializa la entrada/salida
             out = new PrintWriter(clientSocket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out.write(username);
             out.println();
             out.flush();
+            
+            //Este hilo es el que permite enviar los mensajes al servidor
             Thread sender = new Thread(new Runnable() {
                 String msg;
                 public void run() {                          
@@ -68,6 +79,7 @@ public class Client3 extends Application{
                         out.println(username + ":" + msg);
                         out.flush();
                         String finalMSG = msg;
+                        //Debido a que en el thread no se pueden hacer cambios en las interfaces graficas entonces se agrega el Platform para poder lograrlo
                         Platform.runLater(()->{
                             textArea.setText(textArea.getText() + "\n" + username + ":" + finalMSG);
                         });
@@ -82,6 +94,7 @@ public class Client3 extends Application{
             });
             sender.start();  
 
+            //Este hilo es el que permite recibir los mensajes del servidor he imprimirlos en la interfaz grafica
             new Thread(new Runnable() {
                 @Override
                 public void run() {
