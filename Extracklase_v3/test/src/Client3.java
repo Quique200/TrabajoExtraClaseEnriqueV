@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
+import javafx.application.Platform;
 
 public class Client3 extends Application{
     public static void main(String[] args){
@@ -61,17 +62,17 @@ public class Client3 extends Application{
                     button.setOnAction(e -> 
             {
                 String msg;    
-                while((clientSocket.isConnected)){
+                while((clientSocket.isConnected())){
                         textArea.setEditable(true);
                         msg = text.getText();
                         out.println(username + ":" + msg);
                         out.flush();
-                        out.flush();
-                        //Button boton;
-                        //boton = new Button();
-                        //boton.setText(text.getText());
+                        String finalMSG = msg;
+                        Platform.runLater(()->{
+                            textArea.setText(textArea.getText() + "\n" + username + ":" + finalMSG);
+                        });
                         text.clear();
-                        //layout.getChildren().add(boton);
+                        textArea.setEditable(false);
                         break;
 
                     }
